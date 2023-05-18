@@ -63,10 +63,6 @@ if not ((d and (not(d & (d - 1)))) and n>=d and d>1):
     print("d = {0:d} is not a power of 2 such that n ≥ d > 1".format(d))
     sys.exit(1)
 
-if not (q >= 37):
-    print("q = {0:d} is not greater or equal than 37".format(q))
-    sys.exit(1)
-
 if (q - (2*d+1))%(4*d):
     print("q = {0:d} is not equivalent to 2d+1 mod 4d for d={1:d}".format(q,d))
     sys.exit(1)
