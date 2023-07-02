@@ -47,11 +47,11 @@ void alphas(fmpz_t * alpha, unsigned char * alphaSeed, int SEEDS, int delta, int
     unsigned char * alphaBuffer = (unsigned char *) malloc(alphaBufferLength * sizeof(unsigned char));
     size_t alphaBufferPosition = 0;
     unsigned char alphaCounter = 0;
-    refreshBuffer(alphaBuffer,alphaBufferLength,alphaSeed,&alphaCounter);
+    refreshBuffer(alphaBuffer,alphaBufferLength,alphaSeed,SEEDS,&alphaCounter);
 
     for (int rep = 0; rep < len; rep++){
         fmpz_init(alpha[rep]);
-        fmpz_sampler_zq_B(alpha[rep], alphaBuffer, alphaBufferLength, &alphaBufferPosition, alphaSeed, &alphaCounter);
+        fmpz_sampler_zq_B(alpha[rep], alphaBuffer, alphaBufferLength, &alphaBufferPosition, alphaSeed, SEEDS, &alphaCounter);
     }
 
     free(alphaBuffer);

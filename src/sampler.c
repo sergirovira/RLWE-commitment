@@ -60,12 +60,12 @@ void sampler_zq_list(mpz_t * random, size_t l){
 }
 
 /* deterministically sample an fmpz_t ussing pseudorandomnes obtained from seed and counter and stored in buffer at position bufferPosition */
-void fmpz_sampler_zq_B(fmpz_t random, unsigned char * buffer,size_t bufferLength, size_t *bufferPosition,unsigned char * seed, unsigned char *counter){
+void fmpz_sampler_zq_B(fmpz_t random, unsigned char * buffer,size_t bufferLength, size_t *bufferPosition,unsigned char * seed, int SEEDS, unsigned char *counter){
     mpz_t aux;
     mpz_init(aux);
     do {
         if ((*bufferPosition) + BQ >= bufferLength) {
-            refreshBuffer(buffer,bufferLength,seed,counter);
+            refreshBuffer(buffer,bufferLength,seed,SEEDS,counter);
             (*bufferPosition) = 0;
         }
         buffer[*bufferPosition] &= auxSampler;
@@ -127,13 +127,13 @@ void samplerAuxiliaryParameters(int *bQ, int *BQ, unsigned char *auxSampler){
 }
 
 
-void refreshBuffer(unsigned char * buffer, size_t bufferLength, unsigned char * seed, unsigned char *counter) {
+void refreshBuffer(unsigned char * buffer, size_t bufferLength, unsigned char * seed, int SEEDS, unsigned char *counter) {
     // Initialize the XOF function
     #pragma omp critical
     {
         EVP_DigestInit_ex2(MD_CTX, MD_SHAKE, NULL);
         // Use the seed to get the randomness and store it in a buffer of unsigned chars
-        EVP_DigestUpdate(MD_CTX, seed, LAMB);
+        EVP_DigestUpdate(MD_CTX, seed, SEEDS);
         EVP_DigestUpdate(MD_CTX, counter, 1);
         EVP_DigestFinalXOF(MD_CTX, buffer, bufferLength);
     }
@@ -157,7 +157,7 @@ unsigned int randUnsignedIntB(int a, int b, unsigned char * buffer,size_t buffer
     {
         if ((*bufferPosition) + size >= bufferLength)
         {
-            refreshBuffer(buffer,bufferLength,seed,counter);
+            refreshBuffer(buffer,bufferLength,seed,LAMB,counter);
             (*bufferPosition) = 0;
         }
         j = 0;

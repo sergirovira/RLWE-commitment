@@ -39,7 +39,7 @@ void permute(mpz_t v[],int N,unsigned char * seed) {
     unsigned char * buffer = (unsigned char *) malloc(bufferLength * sizeof(unsigned char));
     size_t bufferPosition = 0;
     unsigned char counter = 0;
-    refreshBuffer(buffer,bufferLength,seed,&counter);
+    refreshBuffer(buffer,bufferLength,seed,LAMB,&counter);
 
     // Shuffle the array
     for(int i = 0; i < N-1; i++){
@@ -64,7 +64,7 @@ void permuteInv(mpz_t v[],int N,unsigned char * seed) {
     unsigned char * buffer = (unsigned char *) malloc(bufferLength * sizeof(unsigned char));
     size_t bufferPosition = 0;
     unsigned char counter = 0;
-    refreshBuffer(buffer,bufferLength,seed,&counter);
+    refreshBuffer(buffer,bufferLength,seed,LAMB,&counter);
 
     // Precompute all the swaps of the Fisher-Yates shuffle
     unsigned int js[N];
@@ -100,7 +100,7 @@ void permuteBit(unsigned long v[],int N,unsigned char * seed) {
     unsigned char * buffer = (unsigned char *) malloc(bufferLength * sizeof(unsigned char));
     size_t bufferPosition = 0;
     unsigned char counter = 0;
-    refreshBuffer(buffer,bufferLength,seed,&counter);
+    refreshBuffer(buffer,bufferLength,seed,LAMB,&counter);
 
     int bitAux;
 
@@ -133,7 +133,7 @@ void permuteInvBit(unsigned long v[],int N,unsigned char * seed) {
     unsigned char * buffer = (unsigned char *) malloc(bufferLength * sizeof(unsigned char));
     size_t bufferPosition = 0;
     unsigned char counter = 0;
-    refreshBuffer(buffer,bufferLength,seed,&counter);
+    refreshBuffer(buffer,bufferLength,seed,LAMB,&counter);
 
     // Precompute all the swaps of the Fisher-Yates shuffle
     unsigned int js[N];
